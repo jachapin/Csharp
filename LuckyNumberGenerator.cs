@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace LuckyNumberGenerator
 {
@@ -6,17 +7,43 @@ namespace LuckyNumberGenerator
     {
         static void Main(string[] args)
         {
+            /*** Get user input */
             string intro = @"Lucky Number Generator
-How many numbers do you want?";
+How many numbers do you want? 1-99";
             Console.WriteLine(intro);
             int input = int.Parse(Console.ReadLine());
 
+            // Check that input is less than 100
+            while (input > 99)
+            {
+                Console.WriteLine(@"Range limited from 1 - 99
+How many numbers do you want?");
+                input = int.Parse(Console.ReadLine());
+            }
+
+            /*** Create list of random numbers */
+            List<int> numbers = new List<int>();
+
             Random rand = new Random();
 
-            for (int i = 0; i < input; i++)
+            while (numbers.Count < input) 
             {
-                // Print with format string: five spaces and number type with zero decimal points
-                Console.Write("{0,5:N0}", rand.Next(1, 100));
+                int n = rand.Next(1, 100);
+
+                if (!numbers.Contains(n))
+                {
+                    numbers.Add(n);
+                }
+               
+            }
+
+            numbers.Sort();
+
+            /*** Print Numbers */
+            foreach (var n in numbers)
+            {
+                // Print with format string: five spaces between numbers
+                Console.Write("{0,5}", n);
             }
 
         }
